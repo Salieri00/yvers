@@ -3,63 +3,67 @@ use crate::colorscheme::Colorscheme;
 use crate::widgets::*;
 
 pub struct App<'a, 'b> {
-	pub help_menu: HelpMenu<'a>,
-	pub statusbar: Option<Statusbar<'a>>,
-	pub widgets: Widgets<'a, 'b>,
+    pub help_menu: HelpMenu<'a>,
+    pub statusbar: Option<Statusbar<'a>>,
+    pub widgets: Widgets<'a, 'b>,
 }
 
 pub struct Widgets<'a, 'b> {
-	pub battery: Option<BatteryWidget<'a>>,
-	pub cpu: CpuWidget<'a>,
-	pub disk: Option<DiskWidget<'a>>,
-	pub mem: MemWidget<'a>,
-	pub net: Option<NetWidget<'a, 'b>>,
-	pub proc: ProcWidget<'a>,
-	pub temp: Option<TempWidget<'a>>,
+    /*Widget Added for Patch*/
+    /*add your patch element here*/
+    pub net: Option<NetWidget<'a, 'b>>,
+    pub proc: Option<ProcWidget<'a>>,
+    pub cpu: Option<CpuWidget<'a>>,
 }
 
 pub fn setup_app<'a, 'b>(
-	args: &'b Args,
-	colorscheme: &'a Colorscheme,
-	program_name: &str,
+    args: &'b Args,
+    colorscheme: &'a Colorscheme,
+    program_name: &str,
 ) -> App<'a, 'b> {
-	let cpu = CpuWidget::new(colorscheme, args.interval, args.average_cpu, args.per_cpu);
-	let mem = MemWidget::new(colorscheme, args.interval);
-	let proc = ProcWidget::new(colorscheme);
-	let help_menu = HelpMenu::new(colorscheme);
+    let help_menu = HelpMenu::new(colorscheme);
 
-	let (battery, disk, net, temp) = if args.minimal {
-		(None, None, None, None)
-	} else {
-		(
-			if args.battery {
-				Some(BatteryWidget::new(colorscheme))
-			} else {
-				None
-			},
-			Some(DiskWidget::new(colorscheme)),
-			Some(NetWidget::new(colorscheme, &args.interface)),
-			Some(TempWidget::new(colorscheme, args.fahrenheit)),
-		)
-	};
+    /*add function for patch here.*/
+    /*add your patch here.*/
 
-	let statusbar = if args.statusbar {
-		Some(Statusbar::new(colorscheme, program_name))
-	} else {
-		None
-	};
+    let cpu = if args.cpu || args.everything {
+        Some(CpuWidget::new(
+            colorscheme,
+            args.interval,
+            args.average_cpu,
+            args.per_cpu,
+        ))
+    } else {
+        None
+    };
 
-	App {
-		help_menu,
-		statusbar,
-		widgets: Widgets {
-			battery,
-			cpu,
-			disk,
-			mem,
-			net,
-			proc,
-			temp,
-		},
-	}
+    let net = if args.net || args.everything {
+        Some(NetWidget::new(colorscheme, &args.interface))
+    } else {
+        None
+    };
+
+    let proc = if !args.proc || args.everything {
+        Some(ProcWidget::new(colorscheme))
+    } else {
+        None
+    };
+
+    let statusbar = if args.statusbar || args.everything {
+        Some(Statusbar::new(colorscheme, program_name))
+    } else {
+        None
+    };
+
+    App {
+        help_menu,
+        statusbar,
+        widgets: Widgets {
+            /* add var for patch*/
+            /* add your patch here*/
+            cpu,
+            net,
+            proc,
+        },
+    }
 }

@@ -1,63 +1,27 @@
-### **NO LONGER MAINTAINED.** For a similar program, check out https://github.com/ClementTsang/bottom.
+# yvers
 
-# ytop
 
-![Minimum rustc version](https://img.shields.io/badge/rustc-1.39+-green.svg)
-[![Matrix](https://img.shields.io/badge/matrix-%23ytop-blue.svg)](https://matrix.to/#/#ytop:matrix.org)
+Yvers is a new extensible TUI system monitor and a Linux Process Manager based on ytop with numerous improvements and the addition of the capability to dynamically add widgets created by the community.
 
 <div align="center">
-
-*Another* TUI based system monitor, this time in Rust!
-
-<img src="./assets/demos/demo.gif" />
-<img src="./assets/screenshots/minimal.png" width="96%" />
-
+<img src="https://user-images.githubusercontent.com/78858916/236866996-54b446d4-8419-469b-b698-60baa0e73225.gif" alt="1" width="100%">
+<img src="https://user-images.githubusercontent.com/78858916/236867126-9db5abfa-5d46-464c-8920-91c8433ec84c.gif" alt="2" width="100%">
+<img src="https://user-images.githubusercontent.com/78858916/236867211-cf36c46f-e22f-4334-915c-9299ef6a14f4.gif" alt="3" width="100%">
 </div>
-
-## Missing features
-
-- macOS is missing disk io counters and process commandline
-- Process filtering isn't implemented
-- Mouse usage isn't implemented
-- FreeBSD is currently unsupported
 
 ## Installation
 
-ytop currently works on Linux and macOS with support planned for all major platforms.
+yvers currently works on Linux and macOS with support planned for all major platforms.
 
-### Package managers
+To install yvers, after installing rust, run on the terminal the command:
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/ytop.svg)](https://repology.org/project/ytop/versions)
+`$ cargo install yvers`
 
-#### AUR
+It will install the latest official published version of the crate. Then, to run it, use the
+command:
 
-ytop is available in three different AUR packages: `ytop`, `ytop-bin`, and `ytop-git`.
+`$ yvers`
 
-#### COPR
-
-ytop is also available in [COPR](https://copr.fedorainfracloud.org/coprs/atim/ytop/):
-
-```bash
-sudo dnf copr enable atim/ytop -y
-sudo dnf install ytop
-```
-
-### Homebrew
-
-```bash
-brew tap cjbassi/ytop
-brew install ytop
-```
-
-### Prebuilt binaries
-
-Prebuilt binaries are provided in the [releases](https://github.com/cjbassi/ytop/releases) tab.
-
-### From source
-
-```bash
-cargo install ytop
-```
 
 ## Usage
 
@@ -97,43 +61,40 @@ cargo install ytop
 - click to select process
 - mouse wheel to scroll through processes
 
-### Colorschemes
+### How to Install a Patch?
 
-ytop ships with a few colorschemes which can be set with the `-c` flag followed by the name of one. You can find all the colorschemes in the [colorschemes folder](./colorschemes).
+To install a patch, you can clone the git repository then apply the patch from its location.
 
-To make a custom colorscheme, copy one of the default ones to `~/.config/ytop/<new-name>.json` and load it with `ytop -c <new-name>`. Colorscheme PRs are welcome!
+`$ git clone https://github.com/TokieSan/yvers.git`
+
+`$ cd yvers/`
+
+`$ git apply/path/to/patch/[patch−name].patch`
+
 
 ### CLI Options
 
 ```
 USAGE:
-    ytop [FLAGS] [OPTIONS]
+    yvers [FLAGS] [OPTIONS]
 
 FLAGS:
     -a, --average-cpu    Show average CPU in the CPU widget
-    -b, --battery        Show Battery widget (overridden by 'minimal' flag)
-    -f, --fahrenheit     Show temperatures in fahrenheit
+    -B, --battery        Show battery widget
+    -C, --cpu            Show CPU widget
+    -E, --everything     Show all widgets
     -h, --help           Prints help information
-    -m, --minimal        Only show the CPU, Mem, and Process widgets
+    -N, --net            Show Network widget
     -p, --per-cpu        Show each CPU in the CPU widget
+    -P, --no-proc        Hide processes widget
     -s, --statusbar      Show a statusbar with the time
     -V, --version        Prints version information
 
 OPTIONS:
     -c, --colorscheme <colorscheme>    Set a colorscheme [default: default]
-    -i, --interface <interface>        The name of the network interface to show in the Net widget. 'all' shows all
-                                       interfaces [default: all]
-    -I, --interval <interval>          Interval in seconds between updates of the CPU and Mem widgets. Can specify
-                                       either a whole number or a fraction with a numerator of 1 [default: 1]
+    -i, --interface <interface>      
+    The name of the network interface to show in the Net widget. 'all' shows all interfaces [default: all]
+    -I, --interval <interval>          
+    Interval in seconds between updates of the CPU and Mem widgets. Can specify either a whole number 
+    or a fraction with a numerator of 1 [default: 1]
 ```
-
-## Related projects
-
-- [bashtop](https://github.com/aristocratos/bashtop)
-- [bottom](https://github.com/ClementTsang/bottom)
-- [glances](https://github.com/nicolargo/glances)
-- [gotop](https://github.com/cjbassi/gotop)
-- [gtop](https://github.com/aksakalli/gtop)
-- [htop](https://github.com/hishamhm/htop)
-- [vtop](https://github.com/MrRio/vtop)
-- [zenith](https://github.com/bvaisvil/zenith)
